@@ -1,7 +1,3 @@
-No problem, I can help you with that\! This project demonstrates two distinct data persistence strategies for student information using the **Repository Pattern** in Java.
-
------
-
 # Student Data Persistence: Repository Pattern in Java
 
 This project showcases two ways to manage student data:
