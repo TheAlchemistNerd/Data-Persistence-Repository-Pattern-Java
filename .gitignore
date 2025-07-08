@@ -1,0 +1,44 @@
+# Compiled Java class files and build output
+/target/
+*.class
+
+# Log files
+*.log
+*.log.*
+
+# IDE configuration files
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+.nb-gradle/
+
+# VS Code
+.vscode/
+
+# Local data files from our project
+students.dat
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Maven wrapper
+.mvn/
+mvnw
+mvnw.cmd
+
+# Virtual machine crash logs
+hs_err_pid*
+replay_pid*
