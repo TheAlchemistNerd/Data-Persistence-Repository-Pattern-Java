@@ -76,14 +76,14 @@ Both the `domain` and `model` packages contain the following student types, demo
     * `emailAddress` (unique)
     * `gpa`
     * **`domain.Student`**: Implements `Serializable` for file persistence.
-    * **`model.Student`**: Annotated with `@Entity`, `@Table`, `@Id`, `@GeneratedValue`, and uses `InheritanceType.TABLE_PER_CLASS` for JPA.
+    * **`model.tableperclass.Student`**: Annotated with `@Entity`, `@Table`, `@Id`, `@GeneratedValue`, and uses `InheritanceType.TABLE_PER_CLASS` for JPA.
 
 * ### `Undergrad`
 
   Extends `Student` and adds:
 
     * `yearRank` (an enum: `FRESHMAN`, `SOPHOMORE`, `JUNIOR`, `SENIOR`).
-    * **`model.Undergrad`**: Uses `@Enumerated(EnumType.STRING)` for database storage of the enum.
+    * **`model.tableperclass.Undergrad`**: Uses `@Enumerated(EnumType.STRING)` for database storage of the enum.
 
 * ### `GradStudent`
 
@@ -115,7 +115,7 @@ The `repository` package defines the contract for data operations and provides t
 
 * ### `JpaStudentRepository`
 
-  Implementations `StudentRepository<model.Student>`. It manages persistence operations for `model.Student` entities (and its subclasses) to a relational database using JPA (Hibernate). It ensures transactions are properly managed for all modifying operations.
+  Implementations `StudentRepository<model.tableperclass.Student>`. It manages persistence operations for `model.tableperclass.Student` entities (and its subclasses) to a relational database using JPA (Hibernate). It ensures transactions are properly managed for all modifying operations.
 
 -----
 
@@ -138,35 +138,35 @@ Follow these steps to set up and run the application.
     CREATE DATABASE schooldb;
     ```
 
-2.  **Configure `persistence.xml`:**
+2. **Configure `persistence.xml`:**
     You'll need a `META-INF/persistence.xml` file in your `src/main/resources` directory. This file configures your JPA persistence unit.
-    Make sure the database connection details (URL, username, password) match your MySQL setup.
+   Make sure the database connection details (URL, username, password) match your MySQL setup.
 
     **Example `persistence.xml`:**
 
-    ```xml
-    <?xml version="1.0" encoding="UTF-8"?>
-    <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
-                                     http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
-                 version="2.2">
-        <persistence-unit name="SchoolDBPersistenceUnit" transaction-type="RESOURCE_LOCAL">
-            <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-            <class>model.Student</class>
-            <class>model.Undergrad</class>
-            <class>model.GradStudent</class>
-            <properties>
-                <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/schooldb?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
-                <property name="jakarta.persistence.jdbc.user" value="your_mysql_username"/>
-                <property name="jakarta.persistence.jdbc.password" value="your_mysql_password"/>
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                    http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+                version="2.2">
+       <persistence-unit name="SchoolDBPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+           <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+           <class>model.tableperclass.Student</class>
+           <class>model.tableperclass.Undergrad</class>
+           <class>model.tableperclass.GradStudent</class>
+           <properties>
+               <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+               <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/schooldb?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
+               <property name="jakarta.persistence.jdbc.user" value="your_mysql_username"/>
+               <property name="jakarta.persistence.jdbc.password" value="your_mysql_password"/>
 
-                <property name="hibernate.hbm2ddl.auto" value="update"/> <property name="hibernate.show_sql" value="true"/>       <property name="hibernate.format_sql" value="true"/>     <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
-            </properties>
-        </persistence-unit>
-    </persistence>
-    ```
+               <property name="hibernate.hbm2ddl.auto" value="update"/> <property name="hibernate.show_sql" value="true"/>       <property name="hibernate.format_sql" value="true"/>     <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+           </properties>
+       </persistence-unit>
+   </persistence>
+   ```
 
     **Remember to replace `your_mysql_username` and `your_mysql_password` with your actual database credentials.**
 

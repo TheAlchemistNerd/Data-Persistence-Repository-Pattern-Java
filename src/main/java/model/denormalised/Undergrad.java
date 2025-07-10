@@ -1,22 +1,29 @@
-package model;
+package model.denormalised;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import model.YearRank;
 
 @Entity
-@Table(name = "undergrads")
+@DiscriminatorValue("UNDERGRAD")
 public class Undergrad extends Student {
-    @Enumerated(EnumType.STRING)  // Store the enum name (e.g., "SOPHOMORE") in the DB
+
+    @Enumerated(EnumType.STRING)
     private YearRank yearRank;
 
-    public Undergrad(){}
+    private Undergrad(){}
 
     public Undergrad(String firstName, String lastName,
                      String emailAddress, double gpa,
                      YearRank yearRank) {
         super(firstName, lastName, emailAddress, gpa);
+        this.yearRank = yearRank;
+    }
+
+    public Undergrad(String firstName, String lastName, String emailAddress, double gpa, YearRank yearRank, Address address) {
+        super(firstName, lastName, emailAddress, gpa, address);
         this.yearRank = yearRank;
     }
 

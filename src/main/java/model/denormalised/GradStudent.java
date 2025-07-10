@@ -1,19 +1,27 @@
-package model;
+package model.denormalised;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "gradstudents")
+@DiscriminatorValue("GRADUATE")
 public class GradStudent extends Student {
+
     private boolean hasFacultyAdvisor;
     private boolean hasTuitionCredit;
 
-    public GradStudent() {}
+    private GradStudent(){}
 
-    public GradStudent(String firstName, String lastName, String emailAddress, double gpa,
+    public GradStudent(String firstName, String lastName,
+                       String emailAddress, double gpa,
                        boolean hasFacultyAdvisor, boolean hasTuitionCredit) {
         super(firstName, lastName, emailAddress, gpa);
+        this.hasFacultyAdvisor = hasFacultyAdvisor;
+        this.hasTuitionCredit = hasTuitionCredit;
+    }
+
+    public GradStudent(String firstName, String lastName, String emailAddress, double gpa, boolean hasFacultyAdvisor, boolean hasTuitionCredit, Address address) {
+        super(firstName, lastName, emailAddress, gpa, address);
         this.hasFacultyAdvisor = hasFacultyAdvisor;
         this.hasTuitionCredit = hasTuitionCredit;
     }
