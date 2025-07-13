@@ -1,7 +1,7 @@
 package repository;
 
 import jakarta.persistence.*;
-import model.denormalised.Student;
+import model.normalised.Student;
 
 import java.util.List;
 

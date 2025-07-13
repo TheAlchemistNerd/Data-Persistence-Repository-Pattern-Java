@@ -52,27 +52,27 @@ public class Main {
         System.out.println("\n\n--- Demonstrating JpaStudentRepository (using model classes) ---");
 
         // NEW: Create Address objects for the students
-        model.denormalised.Address peterAddress = new model.denormalised.Address("123 Main St", "Anytown", "12345");
-        model.denormalised.Address maryAddress = new model.denormalised.Address("456 Oak Ave", "Smallville", "67890");
-        model.denormalised.Address aliceAddress = new model.denormalised.Address("789 Pine Ln", "Big City", "10112");
+        model.normalised.Address peterAddress = new model.normalised.Address("123 Main St", "Anytown", "12345");
+        model.normalised.Address maryAddress = new model.normalised.Address("456 Oak Ave", "Smallville", "67890");
+        model.normalised.Address aliceAddress = new model.normalised.Address("789 Pine Ln", "Big City", "10112");
 
         JpaStudentRepository jpaStudentRepository = new JpaStudentRepository();
 
         System.out.println("--- Creating Students in Database ---");
-        jpaStudentRepository.create(new model.denormalised.Undergrad("Peter", "Jones",
+        jpaStudentRepository.create(new model.normalised.Undergrad("Peter", "Jones",
                 "peter.j@example.com", 3.2, model.YearRank.FRESHMAN, peterAddress));
-        jpaStudentRepository.create(new model.denormalised.GradStudent("Mary", "Jane",
+        jpaStudentRepository.create(new model.normalised.GradStudent("Mary", "Jane",
                 "mary.j@example.com", 3.9, false, true, maryAddress));
-        jpaStudentRepository.create(new model.denormalised.Student("Alice", "Wonder",
+        jpaStudentRepository.create(new model.normalised.Student("Alice", "Wonder",
                 "alice.w@example.com", 3.7, aliceAddress));
 
 
         System.out.println("\n--- Retrieving All Students from Database ---");
-        List<model.denormalised.Student> allModelStudents = jpaStudentRepository.getAll();
+        List<model.normalised.Student> allModelStudents = jpaStudentRepository.getAll();
         allModelStudents.forEach(System.out::println); // THIS IS THE SIMPLIFIED LINE!
 
         System.out.println("\n--- Updating a Student in Database ---");
-        model.denormalised.Student peterToUpdate = allModelStudents.stream()
+        model.normalised.Student peterToUpdate = allModelStudents.stream()
                 .filter(s -> s.getEmailAddress().equals("peter.j@example.com"))
                 .findFirst()
                 .orElse(null);
@@ -85,8 +85,8 @@ public class Main {
                 peterToUpdate.getAddress().setCity("Newtown");
             }
 
-            if (peterToUpdate instanceof model.denormalised.Undergrad) {
-                ((model.denormalised.Undergrad) peterToUpdate).setYearRank(model.YearRank.SOPHOMORE);
+            if (peterToUpdate instanceof model.normalised.Undergrad) {
+                ((model.normalised.Undergrad) peterToUpdate).setYearRank(model.YearRank.SOPHOMORE);
             }
             jpaStudentRepository.update(peterToUpdate);
             System.out.println("Updated Peter Jones's GPA, rank, and address.");
